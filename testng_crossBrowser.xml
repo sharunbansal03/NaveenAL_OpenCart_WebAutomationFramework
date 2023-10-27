@@ -19,10 +19,10 @@
   
   <test thread-count="5" name="Test_Firefox_Win10">
   <parameter name="browserName" value="Firefox"/>
-  <parameter name="browserVersion" value="119"/>
+  <parameter name="browserVersion" value="118"/>
   <parameter name="platformName" value="Windows 10"/>
   
-    <classes>
+      <classes>
       <class name="MyAccount.Tests.LoginTest"/>
       <class name="MyAccount.Tests.LogOutTest"/>
     </classes>
