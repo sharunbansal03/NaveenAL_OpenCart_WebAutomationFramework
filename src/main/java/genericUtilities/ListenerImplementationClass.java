@@ -24,13 +24,12 @@ public class ListenerImplementationClass implements ITestListener {
 	 */
 	ThreadLocal<ExtentTest> extentTestThreadSafe = new ThreadLocal<ExtentTest>();
 
-	@Override
 	public void onTestStart(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
-		ExtentTest test = ExtentManagerUtility.report.createTest(methodName,
-				"Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
-						+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform"));
+		ExtentTest test = ExtentManagerUtility.report.createTest(methodName);
 		extentTestThreadSafe.set(test);
+		extentTestThreadSafe.get().info("Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
+				+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform"));
 		extentTestThreadSafe.get().log(Status.INFO, "Test Execution Started: " + methodName);
 	}
 
