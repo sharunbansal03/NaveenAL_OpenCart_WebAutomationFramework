@@ -94,7 +94,7 @@ public class ListenerImplementationClass implements ITestListener {
 		// TODO Auto-generated method stub
 		String methodName = result.getMethod().getMethodName();
 		extentTestThreadSafe.get().log(Status.SKIP, "Test Script skipped - " + methodName);
-		extentTestThreadSafe.get().log(Status.FAIL, result.getThrowable());
+		extentTestThreadSafe.get().log(Status.SKIP, result.getThrowable());
 
 		String screenshotName = methodName + "-" + jUtils.getSystemDataAndTimeInFormat();
 		try {
