@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
 /**
@@ -20,28 +22,37 @@ public class ListenerImplementationClass implements ITestListener {
 	 * ThreadLocal object used so that parallely executing threads cannot see the
 	 * value of each other. They can set and get different values.
 	 */
+	ThreadLocal<ExtentTest> extentTestThreadSafe = new ThreadLocal<ExtentTest>();
 
-
+	@Override
+	public void onTestStart(ITestResult result) {
+		String methodName = result.getMethod().getMethodName();
+		ExtentTest test = ExtentManagerUtility.report.createTest(methodName,
+				"Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
+						+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform"));
+		extentTestThreadSafe.set(test);
+		extentTestThreadSafe.get().log(Status.INFO, "Test Execution Started: " + methodName);
+	}
 
 	public void onTestSuccess(ITestResult result) {
-		ExtentManagerUtility.extentTestThreadSafe.get().log(Status.PASS, "Test passed: " + result.getMethod().getMethodName());
+		extentTestThreadSafe.get().log(Status.PASS, "Test passed: " + result.getMethod().getMethodName());
 	}
 
 	public void onTestFailure(ITestResult result) {
 		JavaUtility jUtils = new JavaUtility();
 		WebDriverUtility wUtils = new WebDriverUtility();
-		
+
 		// TODO Auto-generated method stub
 		String methodName = result.getMethod().getMethodName();
-		ExtentManagerUtility.extentTestThreadSafe.get().log(Status.FAIL, "Test Script failed - " + methodName);
-		ExtentManagerUtility.extentTestThreadSafe.get().log(Status.FAIL, result.getThrowable());
+		extentTestThreadSafe.get().log(Status.FAIL, "Test Script failed - " + methodName);
+		extentTestThreadSafe.get().log(Status.FAIL, result.getThrowable());
 
 		String screenshotName = methodName + "-" + jUtils.getSystemDataAndTimeInFormat();
 
 		try {
 			// executing from jenkins
 			if (System.getProperty("server") != null) {
-	
+
 				/* Creates screenshot in 'Screenshots' folder of project */
 				wUtils.takeScreenshot(BaseClass.sDriver, screenshotName);
 
@@ -61,12 +72,12 @@ public class ListenerImplementationClass implements ITestListener {
 				 * Attaches screenshot captured from Jenkins job's workspace to the extent
 				 * report
 				 */
-				ExtentManagerUtility.extentTestThreadSafe.get().addScreenCaptureFromPath(pathToScreenshotInJob);
+				extentTestThreadSafe.get().addScreenCaptureFromPath(pathToScreenshotInJob);
 			} else {
 				// executing from local machine
-				
+
 				String path = wUtils.takeScreenshot(BaseClass.sDriver, screenshotName);
-				ExtentManagerUtility.extentTestThreadSafe.get().addScreenCaptureFromPath(path);
+				extentTestThreadSafe.get().addScreenCaptureFromPath(path);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -82,8 +93,8 @@ public class ListenerImplementationClass implements ITestListener {
 
 		// TODO Auto-generated method stub
 		String methodName = result.getMethod().getMethodName();
-		ExtentManagerUtility.extentTestThreadSafe.get().log(Status.SKIP, "Test Script skipped - " + methodName);
-		ExtentManagerUtility.extentTestThreadSafe.get().log(Status.FAIL, result.getThrowable());
+		extentTestThreadSafe.get().log(Status.SKIP, "Test Script skipped - " + methodName);
+		extentTestThreadSafe.get().log(Status.FAIL, result.getThrowable());
 
 		String screenshotName = methodName + "-" + jUtils.getSystemDataAndTimeInFormat();
 		try {
@@ -109,12 +120,12 @@ public class ListenerImplementationClass implements ITestListener {
 				 * Attaches screenshot captured from Jenkins job's workspace to the extent
 				 * report
 				 */
-				ExtentManagerUtility.extentTestThreadSafe.get().addScreenCaptureFromPath(pathToScreenshotInJob);
+				extentTestThreadSafe.get().addScreenCaptureFromPath(pathToScreenshotInJob);
 			} else {
-				
+
 				// executing from local machine
 				String path = wUtils.takeScreenshot(BaseClass.sDriver, screenshotName);
-				ExtentManagerUtility.extentTestThreadSafe.get().addScreenCaptureFromPath(path);
+				extentTestThreadSafe.get().addScreenCaptureFromPath(path);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

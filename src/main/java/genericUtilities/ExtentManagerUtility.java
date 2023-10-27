@@ -1,15 +1,12 @@
 package genericUtilities;
 
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ExtentManagerUtility {
 
 	static ExtentReports report;
-
-	static ThreadLocal<ExtentTest> extentTestThreadSafe = new ThreadLocal<ExtentTest>();
 
 	public static void setUpExtentReport() {
 		JavaUtility jUtils = new JavaUtility();

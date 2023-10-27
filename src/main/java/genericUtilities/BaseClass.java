@@ -26,9 +26,6 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-
 import ObjectRepository.HomePage;
 import ObjectRepository.LoginPage;
 
@@ -83,7 +80,7 @@ public class BaseClass {
 	@Parameters({ "browserName", "browserVersion", "platformName" })
 	@BeforeMethod
 	public void setUpDriverAndLogin_bmConfig(@Optional String browserName, @Optional String browserVersion,
-			@Optional String platformName, Method m) throws IOException {
+			@Optional String platformName, Method m,ITestResult result) throws IOException {
 		String SERVER = null;
 		String BROWSER_NAME = null;
 		String BROWSER_VERSION = null;
@@ -154,12 +151,10 @@ public class BaseClass {
 
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.loginToApp(emailAddress, password);
-
-		String methodName = m.getName();
-		ExtentTest test = ExtentManagerUtility.report.createTest(methodName, "Browser: " + BROWSER_NAME
-				+ "; BrowserVersion: " + BROWSER_VERSION + "; OS/Platform: " + PLATFORM_NAME);
-		ExtentManagerUtility.extentTestThreadSafe.set(test);
-		ExtentManagerUtility.extentTestThreadSafe.get().log(Status.INFO, "Test Execution Started: " + methodName);
+		
+		result.setAttribute("browserName", BROWSER_NAME);
+		result.setAttribute("browserVersion", BROWSER_VERSION);
+		result.setAttribute("platform", PLATFORM_NAME);
 	}
 
 	/**

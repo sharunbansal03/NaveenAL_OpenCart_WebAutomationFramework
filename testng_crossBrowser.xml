@@ -6,9 +6,9 @@
 <listener class-name="genericUtilities.ListenerImplementationClass"></listener>
 </listeners>
 
-  <test thread-count="5" name="Test_Firefox_Windows10">
-  <parameter name="browserName" value="Firefox"/>
-  <parameter name="browserVersion" value="117"/>
+  <test thread-count="5" name="Test_Chrome_Win10">
+  <parameter name="browserName" value="Chrome"/>
+  <parameter name="browserVersion" value="latest"/>
   <parameter name="platformName" value="Windows 10"/>
   
     <classes>
@@ -17,10 +17,10 @@
     </classes>
   </test> <!-- Test -->
   
-  <test thread-count="5" name="Test_Firefox_Windows11">
+  <test thread-count="5" name="Test_Firefox_Win10">
   <parameter name="browserName" value="Firefox"/>
-  <parameter name="browserVersion" value="latest"/>
-  <parameter name="platformName" value="Windows 11"/>
+  <parameter name="browserVersion" value="119"/>
+  <parameter name="platformName" value="Windows 10"/>
   
     <classes>
       <class name="MyAccount.Tests.LoginTest"/>
