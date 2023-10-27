@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="4" total="8" passed="4" failed="0" skipped="0">
+<testng-results ignored="4" total="8" passed="3" failed="1" skipped="0">
   <reporter-output>
     <line>
-      <![CDATA[******* Launched Chrome; Version: latest ***********]]>
-    </line>
-    <line>
-      <![CDATA[******* Launched Firefox; Version: 119 ***********]]>
+      <![CDATA[******* Launched Firefox; Version: 118; Platform: Windows 10 ***********]]>
     </line>
     <line>
       <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
@@ -14,25 +11,22 @@
       <![CDATA[[ASSERTION PASSED]: LOGIN SUCCESSFUL]]>
     </line>
     <line>
+      <![CDATA[******* Launched Chrome; Version: latest; Platform: Windows 10 ***********]]>
+    </line>
+    <line>
       <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
     </line>
     <line>
       <![CDATA[[ASSERTION PASSED]: LOGIN SUCCESSFUL]]>
     </line>
     <line>
-      <![CDATA[******* Launched Chrome; Version: latest ***********]]>
+      <![CDATA[******* Launched Firefox; Version: 118; Platform: Windows 10 ***********]]>
     </line>
     <line>
       <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
     </line>
     <line>
-      <![CDATA[STEP: Clicked on Logout from My account dropdown]]>
-    </line>
-    <line>
-      <![CDATA[[ASSERTION PASSED]: LOGOUT SUCCESSFUL]]>
-    </line>
-    <line>
-      <![CDATA[******* Launched Firefox; Version: 119 ***********]]>
+      <![CDATA[******* Launched Chrome; Version: latest; Platform: Windows 10 ***********]]>
     </line>
     <line>
       <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
@@ -44,12 +38,198 @@
       <![CDATA[[ASSERTION PASSED]: LOGOUT SUCCESSFUL]]>
     </line>
   </reporter-output>
-  <suite started-at="2023-10-27T12:22:19 IST" name="Suite" finished-at="2023-10-27T12:23:37 IST" duration-ms="77474">
+  <suite started-at="2023-10-27T13:36:00 IST" name="Suite" finished-at="2023-10-27T13:37:47 IST" duration-ms="106674">
     <groups>
     </groups>
-    <test started-at="2023-10-27T12:22:19 IST" name="Test_Chrome_Win10" finished-at="2023-10-27T12:23:23 IST" duration-ms="63278">
+    <test started-at="2023-10-27T13:36:00 IST" name="Test_Firefox_Win10" finished-at="2023-10-27T13:37:30 IST" duration-ms="89656">
       <class name="MyAccount.Tests.LoginTest">
-        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@769f71a9]" started-at="2023-10-27T12:22:19 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T12:22:59 IST" duration-ms="39124" status="PASS">
+        <test-method is-config="true" signature="createExtentReport_bsConfig()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T13:35:58 IST" name="createExtentReport_bsConfig" finished-at="2023-10-27T13:36:00 IST" duration-ms="1991" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createExtentReport_bsConfig -->
+        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T13:36:00 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T13:36:20 IST" duration-ms="20046" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Firefox]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[118]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows 10]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[public void MyAccount.Tests.LoginTest.loginTest() throws java.io.IOException]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=LoginTest.loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[******* Launched Firefox; Version: 118; Platform: Windows 10 ***********]]>
+            </line>
+            <line>
+              <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- setUpDriverAndLogin_bmConfig -->
+        <test-method signature="loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T13:36:20 IST" name="loginTest" finished-at="2023-10-27T13:36:21 IST" duration-ms="831" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[[ASSERTION PASSED]: LOGIN SUCCESSFUL]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- loginTest -->
+        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T13:36:21 IST" name="quitDriver_amConfig" finished-at="2023-10-27T13:36:22 IST" duration-ms="642" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=loginTest status=SUCCESS method=LoginTest.loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4] output=[ASSERTION PASSED]: LOGIN SUCCESSFUL]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- quitDriver_amConfig -->
+        <test-method is-config="true" signature="flushExtentReport_asConfig()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T13:37:47 IST" name="flushExtentReport_asConfig" finished-at="2023-10-27T13:37:48 IST" duration-ms="1375" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- flushExtentReport_asConfig -->
+      </class> <!-- MyAccount.Tests.LoginTest -->
+      <class name="MyAccount.Tests.LogOutTest">
+        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4]" started-at="2023-10-27T13:36:22 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T13:36:56 IST" duration-ms="34512" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Firefox]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[118]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows 10]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[public void MyAccount.Tests.LogOutTest.logOutTest()]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=LogOutTest.logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[******* Launched Firefox; Version: 118; Platform: Windows 10 ***********]]>
+            </line>
+            <line>
+              <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- setUpDriverAndLogin_bmConfig -->
+        <test-method signature="logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4]" started-at="2023-10-27T13:36:56 IST" name="logOutTest" finished-at="2023-10-27T13:37:27 IST" duration-ms="30490" status="FAIL">
+          <exception class="org.openqa.selenium.NoSuchElementException">
+            <message>
+              <![CDATA[Unable to locate element: //a[@title='My Account']
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.14.0', revision: 'e5a96349ce'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.5'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [454a3474ace74ef5a9faadf3739c8119, findElement {using=xpath, value=//a[@title='My Account']}]
+Capabilities {acceptInsecureCerts: false, browserName: firefox, browserVersion: 118.0.1, moz:accessibilityChecks: false, moz:buildID: 20230927232528, moz:geckodriverVersion: 0.33.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 5084, moz:profile: C:\Users\sauce\AppData\Loca..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), selenium:webdriver.remote.quietExceptions: false, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webdriver.remote.sessionid: 1d66b316-2d02-4af1-95e6-edb...}
+Session ID: 454a3474ace74ef5a9faadf3739c8119]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.openqa.selenium.NoSuchElementException: Unable to locate element: //a[@title='My Account']
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.14.0', revision: 'e5a96349ce'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.5'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [454a3474ace74ef5a9faadf3739c8119, findElement {using=xpath, value=//a[@title='My Account']}]
+Capabilities {acceptInsecureCerts: false, browserName: firefox, browserVersion: 118.0.1, moz:accessibilityChecks: false, moz:buildID: 20230927232528, moz:geckodriverVersion: 0.33.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 5084, moz:profile: C:\Users\sauce\AppData\Loca..., moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), selenium:webdriver.remote.quietExceptions: false, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webdriver.remote.sessionid: 1d66b316-2d02-4af1-95e6-edb...}
+Session ID: 454a3474ace74ef5a9faadf3739c8119
+at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
+at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
+at org.openqa.selenium.remote.TracedCommandExecutor.execute(TracedCommandExecutor.java:51)
+at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:602)
+at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
+at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
+at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:359)
+at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:353)
+at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:68)
+at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+at jdk.proxy2/jdk.proxy2.$Proxy18.click(Unknown Source)
+at MyAccount.Tests.LogOutTest.logOutTest(LogOutTest.java:17)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:135)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:821)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+at org.testng.TestRunner.privateRun(TestRunner.java:767)
+at org.testng.TestRunner.run(TestRunner.java:588)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+at org.testng.SuiteRunner.access$000(SuiteRunner.java:28)
+at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:425)
+at org.testng.internal.thread.ThreadUtil.lambda$execute$0(ThreadUtil.java:68)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+at java.base/java.lang.Thread.run(Thread.java:833)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.openqa.selenium.NoSuchElementException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logOutTest -->
+        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4]" started-at="2023-10-27T13:37:29 IST" name="quitDriver_amConfig" finished-at="2023-10-27T13:37:30 IST" duration-ms="526" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=logOutTest status=FAILURE method=LogOutTest.logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- quitDriver_amConfig -->
+      </class> <!-- MyAccount.Tests.LogOutTest -->
+    </test> <!-- Test_Firefox_Win10 -->
+    <test started-at="2023-10-27T13:36:00 IST" name="Test_Chrome_Win10" finished-at="2023-10-27T13:37:47 IST" duration-ms="106674">
+      <class name="MyAccount.Tests.LoginTest">
+        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@769f71a9]" started-at="2023-10-27T13:36:00 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T13:36:37 IST" duration-ms="36330" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -79,21 +259,21 @@
           </params>
           <reporter-output>
             <line>
-              <![CDATA[******* Launched Chrome; Version: latest ***********]]>
+              <![CDATA[******* Launched Chrome; Version: latest; Platform: Windows 10 ***********]]>
             </line>
             <line>
               <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
             </line>
           </reporter-output>
         </test-method> <!-- setUpDriverAndLogin_bmConfig -->
-        <test-method signature="loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@769f71a9]" started-at="2023-10-27T12:22:59 IST" name="loginTest" finished-at="2023-10-27T12:22:59 IST" duration-ms="327" status="PASS">
+        <test-method signature="loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@769f71a9]" started-at="2023-10-27T13:36:37 IST" name="loginTest" finished-at="2023-10-27T13:36:37 IST" duration-ms="622" status="PASS">
           <reporter-output>
             <line>
               <![CDATA[[ASSERTION PASSED]: LOGIN SUCCESSFUL]]>
             </line>
           </reporter-output>
         </test-method> <!-- loginTest -->
-        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@769f71a9]" started-at="2023-10-27T12:22:59 IST" name="quitDriver_amConfig" finished-at="2023-10-27T12:23:00 IST" duration-ms="724" status="PASS">
+        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@769f71a9]" started-at="2023-10-27T13:36:37 IST" name="quitDriver_amConfig" finished-at="2023-10-27T13:36:38 IST" duration-ms="512" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -106,7 +286,7 @@
         </test-method> <!-- quitDriver_amConfig -->
       </class> <!-- MyAccount.Tests.LoginTest -->
       <class name="MyAccount.Tests.LogOutTest">
-        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@4c9f8c13]" started-at="2023-10-27T12:23:00 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T12:23:15 IST" duration-ms="15633" status="PASS">
+        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@4c9f8c13]" started-at="2023-10-27T13:36:38 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T13:37:44 IST" duration-ms="66263" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -136,14 +316,14 @@
           </params>
           <reporter-output>
             <line>
-              <![CDATA[******* Launched Chrome; Version: latest ***********]]>
+              <![CDATA[******* Launched Chrome; Version: latest; Platform: Windows 10 ***********]]>
             </line>
             <line>
               <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
             </line>
           </reporter-output>
         </test-method> <!-- setUpDriverAndLogin_bmConfig -->
-        <test-method signature="logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@4c9f8c13]" started-at="2023-10-27T12:23:15 IST" name="logOutTest" finished-at="2023-10-27T12:23:21 IST" duration-ms="6120" status="PASS">
+        <test-method signature="logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@4c9f8c13]" started-at="2023-10-27T13:37:44 IST" name="logOutTest" finished-at="2023-10-27T13:37:46 IST" duration-ms="2319" status="PASS">
           <reporter-output>
             <line>
               <![CDATA[STEP: Clicked on Logout from My account dropdown]]>
@@ -153,7 +333,7 @@
             </line>
           </reporter-output>
         </test-method> <!-- logOutTest -->
-        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@4c9f8c13]" started-at="2023-10-27T12:23:21 IST" name="quitDriver_amConfig" finished-at="2023-10-27T12:23:23 IST" duration-ms="1202" status="PASS">
+        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@4c9f8c13]" started-at="2023-10-27T13:37:46 IST" name="quitDriver_amConfig" finished-at="2023-10-27T13:37:47 IST" duration-ms="541" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -166,132 +346,5 @@
         </test-method> <!-- quitDriver_amConfig -->
       </class> <!-- MyAccount.Tests.LogOutTest -->
     </test> <!-- Test_Chrome_Win10 -->
-    <test started-at="2023-10-27T12:22:19 IST" name="Test_Firefox_Win10" finished-at="2023-10-27T12:23:37 IST" duration-ms="77474">
-      <class name="MyAccount.Tests.LoginTest">
-        <test-method is-config="true" signature="createExtentReport_bsConfig()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T12:22:19 IST" name="createExtentReport_bsConfig" finished-at="2023-10-27T12:22:19 IST" duration-ms="485" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- createExtentReport_bsConfig -->
-        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T12:22:19 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T12:23:00 IST" duration-ms="40236" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Firefox]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[119]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[Windows 10]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[public void MyAccount.Tests.LoginTest.loginTest() throws java.io.IOException]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[[TestResult name={null} status=CREATED method=LoginTest.loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-            <line>
-              <![CDATA[******* Launched Firefox; Version: 119 ***********]]>
-            </line>
-            <line>
-              <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- setUpDriverAndLogin_bmConfig -->
-        <test-method signature="loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T12:23:00 IST" name="loginTest" finished-at="2023-10-27T12:23:00 IST" duration-ms="472" status="PASS">
-          <reporter-output>
-            <line>
-              <![CDATA[[ASSERTION PASSED]: LOGIN SUCCESSFUL]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- loginTest -->
-        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T12:23:00 IST" name="quitDriver_amConfig" finished-at="2023-10-27T12:23:15 IST" duration-ms="14691" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=loginTest status=SUCCESS method=LoginTest.loginTest()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4] output=[ASSERTION PASSED]: LOGIN SUCCESSFUL]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- quitDriver_amConfig -->
-        <test-method is-config="true" signature="flushExtentReport_asConfig()[pri:0, instance:MyAccount.Tests.LoginTest@21de60b4]" started-at="2023-10-27T12:23:37 IST" name="flushExtentReport_asConfig" finished-at="2023-10-27T12:23:38 IST" duration-ms="1050" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- flushExtentReport_asConfig -->
-      </class> <!-- MyAccount.Tests.LoginTest -->
-      <class name="MyAccount.Tests.LogOutTest">
-        <test-method is-config="true" signature="setUpDriverAndLogin_bmConfig(java.lang.String, java.lang.String, java.lang.String, java.lang.reflect.Method, org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4]" started-at="2023-10-27T12:23:15 IST" name="setUpDriverAndLogin_bmConfig" finished-at="2023-10-27T12:23:32 IST" duration-ms="17249" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Firefox]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[119]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[Windows 10]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[public void MyAccount.Tests.LogOutTest.logOutTest()]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[[TestResult name={null} status=CREATED method=LogOutTest.logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-            <line>
-              <![CDATA[******* Launched Firefox; Version: 119 ***********]]>
-            </line>
-            <line>
-              <![CDATA[STEP: ENTERED LOGIN CREDENTIALS ]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- setUpDriverAndLogin_bmConfig -->
-        <test-method signature="logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4]" started-at="2023-10-27T12:23:32 IST" name="logOutTest" finished-at="2023-10-27T12:23:33 IST" duration-ms="776" status="PASS">
-          <reporter-output>
-            <line>
-              <![CDATA[STEP: Clicked on Logout from My account dropdown]]>
-            </line>
-            <line>
-              <![CDATA[[ASSERTION PASSED]: LOGOUT SUCCESSFUL]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- logOutTest -->
-        <test-method is-config="true" signature="quitDriver_amConfig(org.testng.ITestResult)[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4]" started-at="2023-10-27T12:23:33 IST" name="quitDriver_amConfig" finished-at="2023-10-27T12:23:37 IST" duration-ms="3999" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=logOutTest status=SUCCESS method=LogOutTest.logOutTest()[pri:0, instance:MyAccount.Tests.LogOutTest@c267ef4] output=STEP: Clicked on Logout from My account dropdown]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- quitDriver_amConfig -->
-      </class> <!-- MyAccount.Tests.LogOutTest -->
-    </test> <!-- Test_Firefox_Win10 -->
   </suite> <!-- Suite -->
 </testng-results>

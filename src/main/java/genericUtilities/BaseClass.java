@@ -41,7 +41,7 @@ public class BaseClass {
 	public PropertiesFileUtility pUtils = new PropertiesFileUtility();
 	public WebDriverUtility wUtils = new WebDriverUtility();
 	public WebDriver driver = null;
-	public static WebDriver sDriver = null;
+	public static WebDriver sDriver = null; 	// sDriver used for taking screenshots
 
 	/**
 	 * This method will execute before Suite and creates an new Extent Report for
@@ -130,15 +130,20 @@ public class BaseClass {
 			setUpRemoteWebDriver(BROWSER_NAME, BROWSER_VERSION, PLATFORM_NAME, m.getName());
 		}
 
-		// sDriver used for taking screenshots
-		sDriver = driver;
-
+		// To attach info to test in extent report configuration in ListenerImplementationClass's onTestStart()
+		result.setAttribute("browserName", BROWSER_NAME);
+		result.setAttribute("browserVersion", BROWSER_VERSION);
+		result.setAttribute("platform", PLATFORM_NAME);
+		
 		// maximize browser
 		wUtils.maximizeWindow(driver);
 
 		// set implicit wait
 		wUtils.waitForPageToLoad(driver);
 
+		/**
+		 * Launch app and login
+		 */
 		// launch app
 		driver.get(pUtils.readFromPropertiesFile("app_url"));
 
@@ -151,10 +156,6 @@ public class BaseClass {
 
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.loginToApp(emailAddress, password);
-		
-		result.setAttribute("browserName", BROWSER_NAME);
-		result.setAttribute("browserVersion", BROWSER_VERSION);
-		result.setAttribute("platform", PLATFORM_NAME);
 	}
 
 	/**
@@ -181,6 +182,7 @@ public class BaseClass {
 		cap.setCapability("browserVersion", BROWSER_VERSION);
 		cap.setCapability("sauce:options", sauceOptions);
 		driver = new RemoteWebDriver(new URL(pUtils.readFromPropertiesFile("hub_url")), cap);
+		sDriver=driver;
 
 		Reporter.log("******* Launched " + BROWSER_NAME + "; Version: " + BROWSER_VERSION + "; Platform: "
 				+ PLATFORM_NAME + " ***********", true);
@@ -198,18 +200,21 @@ public class BaseClass {
 			chOptions.setBrowserVersion(BROWSER_VERSION);
 
 			driver = new ChromeDriver(chOptions);
+			sDriver=driver;
 			Reporter.log("******* Launched " + BROWSER_NAME + "; Version: " + BROWSER_VERSION + " ***********", true);
 		} else if (BROWSER_NAME.equalsIgnoreCase("firefox")) {
 			FirefoxOptions ffOptions = new FirefoxOptions();
 			ffOptions.setBrowserVersion(BROWSER_VERSION);
 
 			driver = new FirefoxDriver(ffOptions);
+			sDriver=driver;
 			Reporter.log("******* Launched " + BROWSER_NAME + "; Version: " + BROWSER_VERSION + " ***********", true);
 		} else if (BROWSER_NAME.equalsIgnoreCase("MicrosoftEdge")) {
 			EdgeOptions edgeOptions = new EdgeOptions();
 			edgeOptions.setBrowserVersion(BROWSER_VERSION);
 
 			driver = new EdgeDriver(edgeOptions);
+			sDriver=driver;
 			Reporter.log("******* Launched " + BROWSER_NAME + "; Version: " + BROWSER_VERSION + " ***********", true);
 		} else
 			Reporter.log("Incorrect browser provided", true);

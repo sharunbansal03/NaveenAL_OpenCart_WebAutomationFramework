@@ -27,13 +27,19 @@ public class ListenerImplementationClass implements ITestListener {
 	public void onTestStart(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
 		ExtentTest test = ExtentManagerUtility.report.createTest(methodName);
+		
+		// add test to threadlocal ExtentTest pool
 		extentTestThreadSafe.set(test);
+	
+		// log execution environment info
 		extentTestThreadSafe.get().info("Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
 				+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform"));
+		
 		extentTestThreadSafe.get().log(Status.INFO, "Test Execution Started: " + methodName);
 	}
 
 	public void onTestSuccess(ITestResult result) {
+		// log as pass
 		extentTestThreadSafe.get().log(Status.PASS, "Test passed: " + result.getMethod().getMethodName());
 	}
 
@@ -42,6 +48,7 @@ public class ListenerImplementationClass implements ITestListener {
 		WebDriverUtility wUtils = new WebDriverUtility();
 
 		// TODO Auto-generated method stub
+		// log as fail and attach screenshot
 		String methodName = result.getMethod().getMethodName();
 		extentTestThreadSafe.get().log(Status.FAIL, "Test Script failed - " + methodName);
 		extentTestThreadSafe.get().log(Status.FAIL, result.getThrowable());
@@ -91,6 +98,7 @@ public class ListenerImplementationClass implements ITestListener {
 		WebDriverUtility wUtils = new WebDriverUtility();
 
 		// TODO Auto-generated method stub
+		// log as skip and attach screenshot
 		String methodName = result.getMethod().getMethodName();
 		extentTestThreadSafe.get().log(Status.SKIP, "Test Script skipped - " + methodName);
 		extentTestThreadSafe.get().log(Status.SKIP, result.getThrowable());

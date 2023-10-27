@@ -4,8 +4,8 @@
   <listeners>
     <listener class-name="genericUtilities.ListenerImplementationClass"/>
   </listeners>
-  <test thread-count="5" parallel="tests" name="Test_Firefox_Windows10(failed)">
-    <parameter name="browserVersion" value="117"/>
+  <test thread-count="5" parallel="tests" name="Test_Firefox_Win10(failed)">
+    <parameter name="browserVersion" value="118"/>
     <parameter name="browserName" value="Firefox"/>
     <parameter name="platformName" value="Windows 10"/>
     <classes>
@@ -19,5 +19,5 @@
         </methods>
       </class> <!-- MyAccount.Tests.LogOutTest -->
     </classes>
-  </test> <!-- Test_Firefox_Windows10(failed) -->
+  </test> <!-- Test_Firefox_Win10(failed) -->
 </suite> <!-- Failed suite [Suite] -->
