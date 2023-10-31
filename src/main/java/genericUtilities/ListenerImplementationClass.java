@@ -27,14 +27,16 @@ public class ListenerImplementationClass implements ITestListener {
 	public void onTestStart(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
 		ExtentTest test = ExtentManagerUtility.report.createTest(methodName);
-		
+
 		// add test to threadlocal ExtentTest pool
 		extentTestThreadSafe.set(test);
-	
+
 		// log execution environment info
-		extentTestThreadSafe.get().info("Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
-				+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform"));
-		
+		extentTestThreadSafe.get()
+				.info("Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
+						+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform")
+						+ "; Driver: " + result.getAttribute("driver"));
+
 		extentTestThreadSafe.get().log(Status.INFO, "Test Execution Started: " + methodName);
 	}
 
@@ -43,10 +45,9 @@ public class ListenerImplementationClass implements ITestListener {
 		extentTestThreadSafe.get().log(Status.PASS, "Test passed: " + result.getMethod().getMethodName());
 	}
 
+
 	public void onTestFailure(ITestResult result) {
 		JavaUtility jUtils = new JavaUtility();
-		WebDriverUtility wUtils = new WebDriverUtility();
-
 		// TODO Auto-generated method stub
 		// log as fail and attach screenshot
 		String methodName = result.getMethod().getMethodName();
@@ -54,48 +55,14 @@ public class ListenerImplementationClass implements ITestListener {
 		extentTestThreadSafe.get().log(Status.FAIL, result.getThrowable());
 
 		String screenshotName = methodName + "-" + jUtils.getSystemDataAndTimeInFormat();
-
-		try {
-			// executing from jenkins
-			if (System.getProperty("server") != null) {
-
-				/* Creates screenshot in 'Screenshots' folder of project */
-				wUtils.takeScreenshot(BaseClass.sDriver, screenshotName);
-
-				/*
-				 * Extracts name of jenkins job since System.getProperty("user.dir") when
-				 * executing from Jenkins returns local directory path like
-				 * 'C:\ProgramData\Jenkins\.jenkins\workspace\WCSM23-SmokeSuite'
-				 */
-				String jenkinsJobName = System.getProperty("user.dir")
-						.substring(System.getProperty("user.dir").lastIndexOf("\\") + 1);
-
-				/* Creates path to captured screenshot in current jenkins job's workspace */
-				String pathToScreenshotInJob = "/job/" + jenkinsJobName + "/ws/Screenshots/" + screenshotName + ".png";
-				System.out.println(pathToScreenshotInJob);
-
-				/*
-				 * Attaches screenshot captured from Jenkins job's workspace to the extent
-				 * report
-				 */
-				extentTestThreadSafe.get().addScreenCaptureFromPath(pathToScreenshotInJob);
-			} else {
-				// executing from local machine
-
-				String path = wUtils.takeScreenshot(BaseClass.sDriver, screenshotName);
-				extentTestThreadSafe.get().addScreenCaptureFromPath(path);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
+		attachScreenshotToReport(screenshotName);
+		
 	}
+
 
 	public void onTestSkipped(ITestResult result) {
 		JavaUtility jUtils = new JavaUtility();
-
-		WebDriverUtility wUtils = new WebDriverUtility();
 
 		// TODO Auto-generated method stub
 		// log as skip and attach screenshot
@@ -104,41 +71,9 @@ public class ListenerImplementationClass implements ITestListener {
 		extentTestThreadSafe.get().log(Status.SKIP, result.getThrowable());
 
 		String screenshotName = methodName + "-" + jUtils.getSystemDataAndTimeInFormat();
-		try {
-			// executing from jenkins
-			if (System.getProperty("server") != null) {
 
-				/* Creates screenshot in 'Screenshots' folder of project */
-				wUtils.takeScreenshot(BaseClass.sDriver, screenshotName);
-
-				/*
-				 * Extracts name of jenkins job since System.getProperty("user.dir") when
-				 * executing from Jenkins returns local directory path like
-				 * 'C:\ProgramData\Jenkins\.jenkins\workspace\WCSM23-SmokeSuite'
-				 */
-				String jenkinsJobName = System.getProperty("user.dir")
-						.substring(System.getProperty("user.dir").lastIndexOf("\\") + 1);
-
-				/* Creates path to captured screenshot in current jenkins job's workspace */
-				String pathToScreenshotInJob = "/job/" + jenkinsJobName + "/ws/Screenshots/" + screenshotName + ".png";
-				System.out.println(pathToScreenshotInJob);
-
-				/*
-				 * Attaches screenshot captured from Jenkins job's workspace to the extent
-				 * report
-				 */
-				extentTestThreadSafe.get().addScreenCaptureFromPath(pathToScreenshotInJob);
-			} else {
-
-				// executing from local machine
-				String path = wUtils.takeScreenshot(BaseClass.sDriver, screenshotName);
-				extentTestThreadSafe.get().addScreenCaptureFromPath(path);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		attachScreenshotToReport(screenshotName);
+		
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
@@ -153,6 +88,65 @@ public class ListenerImplementationClass implements ITestListener {
 	}
 
 	public void onFinish(ITestContext context) {
+	}
+
+	
+	/**
+	 * This method will attach screenshot to extent test
+	 * 
+	 * If execution is in jenkins, it will pick screenshot from jenkins job workspace
+	 * else, it will pick screenshot from local working directory
+	 * 
+	 * @param screenshotName
+	 */
+	private void attachScreenshotToReport(String screenshotName) {
+		WebDriverUtility wUtils = new WebDriverUtility();
+
+
+		/** executing from jenkins, on local/remote/saucelabs/browserstack, pick
+		screenshot from jenkins workspace **/
+		if (System.getProperty("jenkinsExecution").equals(true)) {
+
+			/* Creates screenshot in 'Screenshots' folder of project */
+			try {
+				wUtils.takeScreenshot(BaseClass_new.sDriver, screenshotName);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			/*
+			 * Extracts name of jenkins job since System.getProperty("user.dir") when
+			 * executing from Jenkins returns local directory path like
+			 * 'C:\ProgramData\Jenkins\.jenkins\workspace\WCSM23-SmokeSuite'
+			 */
+			String jenkinsJobName = System.getProperty("user.dir")
+					.substring(System.getProperty("user.dir").lastIndexOf("\\") + 1);
+
+			/* Creates path to captured screenshot in current jenkins job's workspace */
+			String pathToScreenshotInJob = "/job/" + jenkinsJobName + "/ws/Screenshots/" + screenshotName + ".png";
+			System.out.println(pathToScreenshotInJob);
+
+			/*
+			 * Attaches screenshot captured from Jenkins job's workspace to the extent
+			 * report
+			 */
+			extentTestThreadSafe.get().addScreenCaptureFromPath(pathToScreenshotInJob);
+		} else {
+			
+			/** executing from local system, on local/remote/saucelabs/browserstack, pick
+			screenshot from absolute path in screenshots folder**/
+			
+			String path;
+			try {
+				path = wUtils.takeScreenshot(BaseClass_new.sDriver, screenshotName);
+				extentTestThreadSafe.get().addScreenCaptureFromPath(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 }

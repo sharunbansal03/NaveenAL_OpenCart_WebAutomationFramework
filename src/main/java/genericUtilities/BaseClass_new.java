@@ -79,8 +79,7 @@ public class BaseClass_new {
 
 		if (System.getProperty("configFile") != null) {
 			ConfigurationFile = System.getProperty("configFile");
-		} 
-		else if (configFile != null) {
+		} else if (configFile != null) {
 			ConfigurationFile = configFile;
 		} else
 			ConfigurationFile = pUtils.readFromPropertiesFile("configFile");
@@ -92,8 +91,7 @@ public class BaseClass_new {
 		// pick environment information from "commonData.properties" file
 		if (System.getProperty("environment") != null) {
 			environmentInfo = System.getProperty("environment");
-		} 
-		else if (environment != null) {
+		} else if (environment != null) {
 			environmentInfo = environment;
 		} else
 			environmentInfo = pUtils.readFromPropertiesFile("environment");
@@ -143,44 +141,44 @@ public class BaseClass_new {
 		}
 	}
 
-	private void setUpBrowserStackDriver(JSONObject configuration, String environmentInfo, Method m) {
-		DesiredCapabilities capabilities = setCapabilities(configuration, environmentInfo);
-		capabilities.setCapability("name", m.getName());
-
+	private void setUpBrowserStackDriver(JSONObject configuration, String environment, Method m) {
 		String server = tUtils.getBrowserStackServer(configuration);
 		String username = tUtils.getBrowserStackUserName(configuration);
 		String accessKey = tUtils.getBrowserStackKey(configuration);
-		
+
 		String url = "https://" + username + ":" + accessKey + "@" + server + "/wd/hub";
 		System.out.println(url);
+		String BROWSER_NAME = tUtils.getBrowser(configuration, environment);
+		String browser_Version = tUtils.getBrowserVersion(configuration, environment);
+		String platformName = tUtils.getPlatform(configuration, environment);
 
-		if (environmentInfo.equalsIgnoreCase("chrome")) {
+		if (BROWSER_NAME.equalsIgnoreCase("chrome")) {
 			ChromeOptions chOptions = new ChromeOptions();
-			chOptions.setBrowserVersion(capabilities.getCapability("browser_Version").toString());
-			chOptions.setPlatformName(capabilities.getCapability("os").toString());
-			chOptions.setCapability("name", m.getName());
+			chOptions.setBrowserVersion(browser_Version);
+			chOptions.setPlatformName(platformName);
+
 			try {
 				driver = new RemoteWebDriver(new URL(url), chOptions);
 				sDriver = driver;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (environmentInfo.equalsIgnoreCase("firefox")) {
+		} else if (BROWSER_NAME.equalsIgnoreCase("firefox")) {
 			FirefoxOptions fOptions = new FirefoxOptions();
-			fOptions.setBrowserVersion(capabilities.getCapability("browser_Version").toString());
-			fOptions.setPlatformName(capabilities.getCapability("os").toString());
-			fOptions.setCapability("name", m.getName());
+			fOptions.setBrowserVersion(browser_Version);
+			fOptions.setPlatformName(platformName);
+
 			try {
 				driver = new RemoteWebDriver(new URL(url), fOptions);
 				sDriver = driver;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (environmentInfo.equalsIgnoreCase("edge")) {
+		} else if (BROWSER_NAME.equalsIgnoreCase("edge")) {
 			EdgeOptions eOptions = new EdgeOptions();
-			eOptions.setBrowserVersion(capabilities.getCapability("browser_Version").toString());
-			eOptions.setPlatformName(capabilities.getCapability("os").toString());
-			eOptions.setCapability("name", m.getName());
+			eOptions.setBrowserVersion(browser_Version);
+			eOptions.setPlatformName(platformName);
+
 			try {
 				driver = new RemoteWebDriver(new URL(url), eOptions);
 				sDriver = driver;
@@ -188,7 +186,18 @@ public class BaseClass_new {
 				e.printStackTrace();
 			}
 		}
+		
+		setTestNameOnBrowserStack(driver,m.getName());
+	}
 
+	private void setTestNameOnBrowserStack(WebDriver driver2, String name) {
+		final JavascriptExecutor jse = (JavascriptExecutor) driver;
+		JSONObject executorObject = new JSONObject();
+		JSONObject argumentsObject = new JSONObject();
+		argumentsObject.put("name", name);
+		executorObject.put("action", "setSessionName");
+		executorObject.put("arguments", argumentsObject);
+		jse.executeScript(String.format("browserstack_executor: %s", executorObject));
 	}
 
 	private void setUpSauceLabsDriver(JSONObject configuration, String environmentInfo, Method m) {
@@ -334,6 +343,11 @@ public class BaseClass_new {
 			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
 			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
 			result.setAttribute("driver", "saucelabs");
+		}else if (driver.equalsIgnoreCase("browserstack")) {
+			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
+			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
+			result.setAttribute("driver", "browserstack");
 		}
 	}
 
@@ -347,12 +361,20 @@ public class BaseClass_new {
 	@Parameters("configFile")
 	@AfterMethod
 	public void quitDriver_amConfig(@Optional String configFile, ITestResult result) throws IOException {
-		// if execution on remote(saucelab cloud), mark test cases as pass/fail
-		if ((configFile != null && configFile.startsWith("saucelabs"))
-				|| (System.getProperty("configFile") != null && configFile.startsWith("saucelabs"))
-				|| pUtils.readFromPropertiesFile("configFile").startsWith("saucelabs"))
-			((JavascriptExecutor) driver)
-					.executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));
+		// if execution on remote(browserstack cloud), mark test cases as pass/fail
+		if ((System.getProperty("configFile") != null && System.getProperty("configFile").startsWith("browserstack"))
+				|| (configFile != null && configFile.startsWith("browserstack"))
+				|| pUtils.readFromPropertiesFile("configFile").startsWith("browserstack")) {
+
+			final JavascriptExecutor jse = (JavascriptExecutor) driver;
+			JSONObject executorObject = new JSONObject();
+			JSONObject argumentsObject = new JSONObject();
+			argumentsObject.put("status", result.isSuccess() ? "passed" : "failed");
+			executorObject.put("action", "setSessionStatus");
+			executorObject.put("arguments", argumentsObject);
+			jse.executeScript(String.format("browserstack_executor: %s", executorObject));
+
+		}
 
 		driver.quit();
 	}

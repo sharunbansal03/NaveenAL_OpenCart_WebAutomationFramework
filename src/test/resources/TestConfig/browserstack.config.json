@@ -12,9 +12,9 @@
    "environments":{
       "chrome":{
          "capabilities":{
-            "browser":"Chrome",
-            "browser_Version":"latest",
-            "os":"Windows 10"
+            "browserName":"Chrome",
+            "browserVersion":"latest",
+            "platformName":"Windows 10"
          },
          "chrome-options":{
             "args":[
@@ -25,15 +25,15 @@
       "firefox":{
          "capabilities":{
             "browserName":"Firefox",
-            "browser_Version":"118",
-            "os":"Windows 11"
+            "browserVersion":"118",
+            "platformName":"Windows 11"
          }
       },
       "edge":{
          "capabilities":{
             "browserName":"Edge",
-            "browser_Version":"117",
-            "os":"Windows 10"
+            "browserVersion":"117",
+            "platformName":"Windows 10"
          }
       }
    }

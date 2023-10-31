@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite parallel="tests" name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <parameter name="environment" value="firefox"/>
+  <parameter name="configFile" value="browserstack.config.json"/>
   <listeners>
     <listener class-name="genericUtilities.ListenerImplementationClass"/>
   </listeners>
-  <test thread-count="5" parallel="tests" name="Test_Firefox_Win10(failed)">
-    <parameter name="browserVersion" value="118"/>
-    <parameter name="browserName" value="Firefox"/>
-    <parameter name="platformName" value="Windows 10"/>
+  <test thread-count="5" parallel="tests" name="Test_Login(failed)">
     <classes>
-      <class name="MyAccount.Tests.LogOutTest">
+      <class name="MyAccount.Tests.LoginTest">
         <methods>
-          <include name="setUpDriverAndLogin_bmConfig"/>
-          <include name="flushExtentReport_asConfig"/>
-          <include name="createExtentReport_bsConfig"/>
-          <include name="logOutTest"/>
           <include name="quitDriver_amConfig"/>
+          <include name="setUpDriverAndLogin_bmConfig"/>
+          <include name="createExtentReport_bsConfig"/>
+          <include name="flushExtentReport_asConfig"/>
+          <include name="loginTest"/>
         </methods>
-      </class> <!-- MyAccount.Tests.LogOutTest -->
+      </class> <!-- MyAccount.Tests.LoginTest -->
     </classes>
-  </test> <!-- Test_Firefox_Win10(failed) -->
+  </test> <!-- Test_Login(failed) -->
 </suite> <!-- Failed suite [Suite] -->

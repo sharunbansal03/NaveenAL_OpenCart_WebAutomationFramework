@@ -16,6 +16,7 @@ public class LoginTest extends BaseClass_new{
 	public void loginTest() throws IOException {
 		
 		AccountPage ap= new AccountPage(driver);
+		Assert.fail();
 		Assert.assertTrue(ap.getMyAccount_Header().isDisplayed(),"[ASSERTION FAILED]: LOGIN FAILED");
 		Reporter.log("[ASSERTION PASSED]: LOGIN SUCCESSFUL", true);
 	}
