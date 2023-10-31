@@ -8,7 +8,7 @@
   <test thread-count="5" name="Test_Login">
     <classes>
       <class name="MyAccount.Tests.LoginTest"/>
-       <class name="MyAccount.Tests.LogOutTest"/>
+      <class name="MyAccount.Tests.LogOutTest"/>
     </classes>
   </test> <!-- Test -->
  

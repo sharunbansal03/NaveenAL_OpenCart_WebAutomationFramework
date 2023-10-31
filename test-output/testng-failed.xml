@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite parallel="tests" name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
-  <parameter name="environment" value="firefox"/>
-  <parameter name="configFile" value="browserstack.config.json"/>
   <listeners>
     <listener class-name="genericUtilities.ListenerImplementationClass"/>
   </listeners>
-  <test thread-count="5" parallel="tests" name="Test_Login(failed)">
+  <test thread-count="5" parallel="tests" name="Test_ChromeLatest_Win10(failed)">
+    <parameter name="environment" value="chrome"/>
+    <parameter name="configFile" value="browserstack.config.json"/>
     <classes>
       <class name="MyAccount.Tests.LoginTest">
         <methods>
@@ -18,5 +18,35 @@
         </methods>
       </class> <!-- MyAccount.Tests.LoginTest -->
     </classes>
-  </test> <!-- Test_Login(failed) -->
+  </test> <!-- Test_ChromeLatest_Win10(failed) -->
+  <test thread-count="5" parallel="tests" name="Test_Edge117_Win10(failed)">
+    <parameter name="environment" value="edge"/>
+    <parameter name="configFile" value="browserstack.config.json"/>
+    <classes>
+      <class name="MyAccount.Tests.LoginTest">
+        <methods>
+          <include name="quitDriver_amConfig"/>
+          <include name="setUpDriverAndLogin_bmConfig"/>
+          <include name="createExtentReport_bsConfig"/>
+          <include name="flushExtentReport_asConfig"/>
+          <include name="loginTest"/>
+        </methods>
+      </class> <!-- MyAccount.Tests.LoginTest -->
+    </classes>
+  </test> <!-- Test_Edge117_Win10(failed) -->
+  <test thread-count="5" parallel="tests" name="Test_Firefox118_Win11(failed)">
+    <parameter name="environment" value="firefox"/>
+    <parameter name="configFile" value="browserstack.config.json"/>
+    <classes>
+      <class name="MyAccount.Tests.LoginTest">
+        <methods>
+          <include name="quitDriver_amConfig"/>
+          <include name="setUpDriverAndLogin_bmConfig"/>
+          <include name="createExtentReport_bsConfig"/>
+          <include name="flushExtentReport_asConfig"/>
+          <include name="loginTest"/>
+        </methods>
+      </class> <!-- MyAccount.Tests.LoginTest -->
+    </classes>
+  </test> <!-- Test_Firefox118_Win11(failed) -->
 </suite> <!-- Failed suite [Suite] -->

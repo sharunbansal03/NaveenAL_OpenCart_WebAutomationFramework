@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -67,7 +68,7 @@ public class BaseClass_new {
 	}
 
 	@Parameters({ "configFile", "environment" })
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setUpDriverAndLogin_bmConfig(@Optional String configFile, @Optional String environment, Method m,
 			ITestResult result) throws IOException {
 		String ConfigurationFile = null;
@@ -79,6 +80,7 @@ public class BaseClass_new {
 
 		if (System.getProperty("configFile") != null) {
 			ConfigurationFile = System.getProperty("configFile");
+			System.out.println(System.getProperty("configFile"));
 		} else if (configFile != null) {
 			ConfigurationFile = configFile;
 		} else
@@ -91,6 +93,7 @@ public class BaseClass_new {
 		// pick environment information from "commonData.properties" file
 		if (System.getProperty("environment") != null) {
 			environmentInfo = System.getProperty("environment");
+			System.out.println(System.getProperty("environment"));
 		} else if (environment != null) {
 			environmentInfo = environment;
 		} else
@@ -147,56 +150,45 @@ public class BaseClass_new {
 		String accessKey = tUtils.getBrowserStackKey(configuration);
 
 		String url = "https://" + username + ":" + accessKey + "@" + server + "/wd/hub";
-		System.out.println(url);
+
 		String BROWSER_NAME = tUtils.getBrowser(configuration, environment);
 		String browser_Version = tUtils.getBrowserVersion(configuration, environment);
 		String platformName = tUtils.getPlatform(configuration, environment);
 
-		if (BROWSER_NAME.equalsIgnoreCase("chrome")) {
-			ChromeOptions chOptions = new ChromeOptions();
-			chOptions.setBrowserVersion(browser_Version);
-			chOptions.setPlatformName(platformName);
+		// Set Selenium w3c Capabilities
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("browserName", BROWSER_NAME);
+		capabilities.setCapability("browserVersion", browser_Version);
+		capabilities.setCapability("platformName", platformName);
+		capabilities.setCapability("acceptInsecureCerts", true);
 
-			try {
-				driver = new RemoteWebDriver(new URL(url), chOptions);
-				sDriver = driver;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if (BROWSER_NAME.equalsIgnoreCase("firefox")) {
-			FirefoxOptions fOptions = new FirefoxOptions();
-			fOptions.setBrowserVersion(browser_Version);
-			fOptions.setPlatformName(platformName);
+		// attach browser stack custom capabilities
+		HashMap<String, Object> browserstackOptions = setBrowserStackGenericCapabilities(configuration);
+		capabilities.setCapability("bstack:options", browserstackOptions);
 
-			try {
-				driver = new RemoteWebDriver(new URL(url), fOptions);
-				sDriver = driver;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if (BROWSER_NAME.equalsIgnoreCase("edge")) {
-			EdgeOptions eOptions = new EdgeOptions();
-			eOptions.setBrowserVersion(browser_Version);
-			eOptions.setPlatformName(platformName);
-
-			try {
-				driver = new RemoteWebDriver(new URL(url), eOptions);
-				sDriver = driver;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			driver = new RemoteWebDriver(new URL(url), capabilities);
+			Reporter.log("******* Launched " + capabilities.getBrowserName() + " browser; Version: "
+					+ capabilities.getCapability("browserVersion") + " Platform: " + capabilities.getPlatformName()
+					+ " on 'BrowserStack'***********", true);
+			sDriver = driver;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		setTestNameOnBrowserStack(driver,m.getName());
+
+		setTestNameOnBrowserStack(driver, m.getName());
 	}
 
 	private void setTestNameOnBrowserStack(WebDriver driver2, String name) {
 		final JavascriptExecutor jse = (JavascriptExecutor) driver;
 		JSONObject executorObject = new JSONObject();
 		JSONObject argumentsObject = new JSONObject();
+
 		argumentsObject.put("name", name);
 		executorObject.put("action", "setSessionName");
+
 		executorObject.put("arguments", argumentsObject);
+
 		jse.executeScript(String.format("browserstack_executor: %s", executorObject));
 	}
 
@@ -206,6 +198,7 @@ public class BaseClass_new {
 		Map<String, String> sauceCap = setSauceOptionsCapabilities(configuration, m);
 		DesiredCapabilities cap = setCapabilities(configuration, environmentInfo);
 		cap.setCapability("sauce:options", sauceCap);
+
 		if (environmentInfo.equals("IE")) {
 			cap.setCapability("edgechromium", true);
 		}
@@ -227,6 +220,12 @@ public class BaseClass_new {
 		Map<String, String> sauceCap = (Map<String, String>) tUtils.getSauceLabsCapabilities(configuration);
 		sauceCap.put("name", m.getName());
 		return sauceCap;
+	}
+
+	private HashMap<String, Object> setBrowserStackGenericCapabilities(JSONObject configuration) {
+		HashMap<String, Object> bsCap = (HashMap<String, Object>) tUtils
+				.getBrowserStackGeneralCapabilities(configuration);
+		return bsCap;
 	}
 
 	private void setUpRemoteWebDriver(JSONObject configuration, String environmentInfo) {
@@ -343,7 +342,7 @@ public class BaseClass_new {
 			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
 			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
 			result.setAttribute("driver", "saucelabs");
-		}else if (driver.equalsIgnoreCase("browserstack")) {
+		} else if (driver.equalsIgnoreCase("browserstack")) {
 			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
 			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
 			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
@@ -359,13 +358,10 @@ public class BaseClass_new {
 	 * 
 	 */
 	@Parameters("configFile")
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void quitDriver_amConfig(@Optional String configFile, ITestResult result) throws IOException {
 		// if execution on remote(browserstack cloud), mark test cases as pass/fail
-		if ((System.getProperty("configFile") != null && System.getProperty("configFile").startsWith("browserstack"))
-				|| (configFile != null && configFile.startsWith("browserstack"))
-				|| pUtils.readFromPropertiesFile("configFile").startsWith("browserstack")) {
-
+		if (result.getAttribute("driver").toString().equalsIgnoreCase("browserstack")) {
 			final JavascriptExecutor jse = (JavascriptExecutor) driver;
 			JSONObject executorObject = new JSONObject();
 			JSONObject argumentsObject = new JSONObject();
@@ -373,7 +369,6 @@ public class BaseClass_new {
 			executorObject.put("action", "setSessionStatus");
 			executorObject.put("arguments", argumentsObject);
 			jse.executeScript(String.format("browserstack_executor: %s", executorObject));
-
 		}
 
 		driver.quit();

@@ -105,7 +105,7 @@ public class ListenerImplementationClass implements ITestListener {
 
 		/** executing from jenkins, on local/remote/saucelabs/browserstack, pick
 		screenshot from jenkins workspace **/
-		if (System.getProperty("jenkinsExecution").equals(true)) {
+		if (System.getProperty("jenkinsExecution")!=null && System.getProperty("jenkinsExecution").equals(true)) {
 
 			/* Creates screenshot in 'Screenshots' folder of project */
 			try {

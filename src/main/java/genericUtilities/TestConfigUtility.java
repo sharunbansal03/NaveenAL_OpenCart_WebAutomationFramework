@@ -86,6 +86,10 @@ public class TestConfigUtility {
 	public JSONObject getSauceLabsCapabilities(JSONObject configuration) {
 		return (JSONObject) configuration.get("capabilities");
 	}
+	
+	public JSONObject getBrowserStackGeneralCapabilities(JSONObject configuration) {
+		return (JSONObject) configuration.get("capabilities");
+	}
 
 	 public String getBrowserStackServer(JSONObject config)
 	    {

@@ -5,9 +5,10 @@
 	"userName": "sharunbansal_ftsMTw",
 	"accessKey": "zHzA2yz1CQdScVJkPQCR",
 	"capabilities": {
-		"browserstack.debug": true,
-		"browserstack.local": false,
-		"acceptSslCerts": true
+		"debug": true,
+		"local": false,
+		"networkLogs": true,
+		"projectName": "NaveenAL_OpenCart"
 	},
    "environments":{
       "chrome":{
