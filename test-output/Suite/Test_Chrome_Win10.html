@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Test_Chrome_Win10</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>2/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>0/0/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Oct 27 13:36:00 IST 2023</td>
+<td>Started on:</td><td>Tue Oct 31 16:25:05 IST 2023</td>
 </tr>
-<tr><td>Total time:</td><td>106 seconds (106674 ms)</td>
+<tr><td>Total time:</td><td>9 seconds (9508 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -67,38 +67,97 @@ function toggleAllBoxes() {
 </tr>
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
-<table width='100%' border='1' class='invocation-passed'>
-<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
 <td width="30%"><b>Exception</b></td>
 <td width="10%"><b>Time (seconds)</b></td>
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='MyAccount.Tests.LogOutTest.logOutTest()'><b>logOutTest</b><br>Test class: MyAccount.Tests.LogOutTest<br/>
-<a href="#Output-1005587231" onClick='toggleBox("Output-1005587231", this, "Show output", "Hide output");'>Show output</a>
-
-<a href="#Output-1005587231" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1005587231">
-STEP: Clicked on Logout from My account dropdown<br/>
-[ASSERTION PASSED]: LOGOUT SUCCESSFUL<br/>
-</div>
-</td>
-<td></td>
-<td>2</td>
-<td>MyAccount.Tests.LogOutTest@4c9f8c13</td></tr>
-<tr>
 <td title='MyAccount.Tests.LoginTest.loginTest()'><b>loginTest</b><br>Test class: MyAccount.Tests.LoginTest<br/>
-<a href="#Output-1788007797" onClick='toggleBox("Output-1788007797", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-2116204938" onClick='toggleBox("Output-2116204938", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1788007797" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1788007797">
+<a href="#Output-2116204938" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-2116204938">
 [ASSERTION PASSED]: LOGIN SUCCESSFUL<br/>
 </div>
 </td>
-<td></td>
+<td><div><pre>java.lang.AssertionError: null
+	at MyAccount.Tests.LoginTest.loginTest(LoginTest.java:21)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+... Removed 20 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace2116204938", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace2116204938'><pre>java.lang.AssertionError: null
+	at org.testng.Assert.fail(Assert.java:97)
+	at org.testng.Assert.fail(Assert.java:102)
+	at MyAccount.Tests.LoginTest.loginTest(LoginTest.java:21)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:135)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:821)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:588)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:28)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:425)
+	at org.testng.internal.thread.ThreadUtil.lambda$execute$0(ThreadUtil.java:68)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+</pre></div></td>
 <td>0</td>
-<td>MyAccount.Tests.LoginTest@769f71a9</td></tr>
+<td>MyAccount.Tests.LoginTest@34b7ac2f</td></tr>
+<tr>
+<td title='MyAccount.Tests.LoginTest.loginTest()'><b>loginTest</b><br>Test class: MyAccount.Tests.LoginTest</td>
+<td><div><pre>java.lang.NullPointerException: Cannot invoke &quot;org.openqa.selenium.TakesScreenshot.getScreenshotAs(org.openqa.selenium.OutputType)&quot; because &quot;ts&quot; is null
+	at genericUtilities.WebDriverUtility.takeScreenshot(WebDriverUtility.java:261)
+	at genericUtilities.ListenerImplementationClass.onTestFailure(ListenerImplementationClass.java:85)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+... Removed 15 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace94433967", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace94433967'><pre>java.lang.NullPointerException: Cannot invoke &quot;org.openqa.selenium.TakesScreenshot.getScreenshotAs(org.openqa.selenium.OutputType)&quot; because &quot;ts&quot; is null
+	at genericUtilities.WebDriverUtility.takeScreenshot(WebDriverUtility.java:261)
+	at genericUtilities.ListenerImplementationClass.onTestFailure(ListenerImplementationClass.java:85)
+	at org.testng.internal.TestListenerHelper.runTestListeners(TestListenerHelper.java:66)
+	at org.testng.internal.TestInvoker.runTestResultListener(TestInvoker.java:220)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:656)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:821)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:588)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:28)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:425)
+	at org.testng.internal.thread.ThreadUtil.lambda$execute$0(ThreadUtil.java:68)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+</pre></div></td>
+<td>9</td>
+<td>MyAccount.Tests.LoginTest@34b7ac2f</td></tr>
 </table><p>
 </body>
 </html>

@@ -1,0 +1,32 @@
+{
+  "driver": "local",
+  "environments": {
+    "chrome": {
+      "capabilities": {
+        "browserName": "chrome",
+        "browserVersion": "latest"
+      },
+      "chrome-options": {
+        "args": []
+      }
+    },
+    "firefox": {
+      "capabilities": {
+        "browserName": "firefox",
+        "browserVersion": "latest"
+      }
+    },
+    "internet explorer": {
+      "capabilities": {
+        "browserName": "internet explorer",
+        "browserVersion": "latest"
+      }
+    },
+    "edge": {
+      "capabilities": {
+        "browserName": "edge",
+        "browserVersion": "latest"
+      }
+    }
+  }
+}

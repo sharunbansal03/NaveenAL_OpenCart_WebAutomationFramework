@@ -9,7 +9,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
-<profiles>
+	<profiles>
 		<profile>
 			<id>Parallel</id>
 			<build>
@@ -27,7 +27,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>CrossBrowser</id>
 			<build>
@@ -45,8 +45,8 @@
 				</plugins>
 			</build>
 		</profile>
-		
-		</profiles>
+
+	</profiles>
 
 	<dependencies>
 
@@ -84,8 +84,8 @@
 			<artifactId>extentreports</artifactId>
 			<version>5.0.9</version>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -93,7 +93,12 @@
 			<scope>provided</scope>
 		</dependency>
 
-		
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>

@@ -4,6 +4,10 @@
 <listeners>
 <listener class-name="genericUtilities.ListenerImplementationClass"></listener>
 </listeners>
+
+<parameter name="configFile" value="browserstack.config.json"></parameter>
+<parameter name="environment" value="edge"></parameter>
+
   <test thread-count="5" name="Test_Login">
     <classes>
       <class name="MyAccount.Tests.LoginTest"/>

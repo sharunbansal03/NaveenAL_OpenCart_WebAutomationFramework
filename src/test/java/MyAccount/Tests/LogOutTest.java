@@ -8,8 +8,9 @@ import ObjectRepository.AccountLogoutPage;
 import ObjectRepository.AccountPage;
 import ObjectRepository.HomePage;
 import genericUtilities.BaseClass;
+import genericUtilities.BaseClass_new;
 
-public class LogOutTest extends BaseClass {
+public class LogOutTest extends BaseClass_new {
 
 	@Test
 	public void logOutTest() {

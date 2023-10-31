@@ -1,0 +1,33 @@
+{
+  "driver": "remote",
+  "remote-hub-url": "http://192.168.1.29:4444/",
+  "environments": {
+    "chrome": {
+      "capabilities": {
+        "browserName": "chrome",
+        "platformName": "Windows 10"
+      },
+      "chrome-options": {
+        "args": []
+      }
+    },
+    "firefox": {
+      "capabilities": {
+        "browserName": "firefox",
+        "platformName": "Windows 10"
+      }
+    },
+    "internet explorer": {
+      "capabilities": {
+        "browserName": "internet explorer",
+        "platformName": "Windows 10"
+      }
+    },
+    "MicrosoftEdge": {
+      "capabilities": {
+        "browserName": "MicrosoftEdge",
+        "platformName": "Windows 10"
+      }
+    }
+  }
+}

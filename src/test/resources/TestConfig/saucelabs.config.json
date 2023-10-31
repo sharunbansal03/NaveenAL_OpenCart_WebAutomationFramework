@@ -1,0 +1,36 @@
+{
+   "driver":"saucelabs",
+   "remote-hub-url":"https://ondemand.eu-central-1.saucelabs.com:443/wd/hub",
+   "capabilities":{
+      "username":"oauth-sharun.bansal03-bef98",
+      "accessKey":"3009e83f-d087-492b-b038-3ee66232ad5d"
+   },
+   "environments":{
+      "chrome":{
+         "capabilities":{
+            "browserName":"Chrome",
+            "browserVersion":"118",
+            "platformName":"Windows 10"
+         },
+         "chrome-options":{
+            "args":[
+               
+            ]
+         }
+      },
+      "firefox":{
+         "capabilities":{
+            "browserName":"firefox",
+            "browserVersion":"latest",
+            "platformName":"Windows 11"
+         }
+      },
+      "edge":{
+         "capabilities":{
+            "browserName":"MicrosoftEdge",
+            "browserVersion":"117",
+            "platformName":"Windows 11"
+         }
+      }
+   }
+}

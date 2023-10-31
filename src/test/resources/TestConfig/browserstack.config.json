@@ -1,0 +1,40 @@
+{
+   
+	"driver": "browserstack",
+	"server": "hub-cloud.browserstack.com",
+	"userName": "sharunbansal_ftsMTw",
+	"accessKey": "zHzA2yz1CQdScVJkPQCR",
+	"capabilities": {
+		"browserstack.debug": true,
+		"browserstack.local": false,
+		"acceptSslCerts": true
+	},
+   "environments":{
+      "chrome":{
+         "capabilities":{
+            "browser":"Chrome",
+            "browser_Version":"latest",
+            "os":"Windows 10"
+         },
+         "chrome-options":{
+            "args":[
+               
+            ]
+         }
+      },
+      "firefox":{
+         "capabilities":{
+            "browserName":"Firefox",
+            "browser_Version":"118",
+            "os":"Windows 11"
+         }
+      },
+      "edge":{
+         "capabilities":{
+            "browserName":"Edge",
+            "browser_Version":"117",
+            "os":"Windows 10"
+         }
+      }
+   }
+}
