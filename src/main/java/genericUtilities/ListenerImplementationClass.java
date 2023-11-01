@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -105,7 +106,7 @@ public class ListenerImplementationClass implements ITestListener {
 
 		/** executing from jenkins, on local/remote/saucelabs/browserstack, pick
 		screenshot from jenkins workspace **/
-		if (System.getProperty("jenkinsExecution")!=null && System.getProperty("jenkinsExecution").equals(true)) {
+		if (System.getProperty("jenkinsExecution")!=null && System.getProperty("jenkinsExecution").equalsIgnoreCase("yes")) {
 
 			/* Creates screenshot in 'Screenshots' folder of project */
 			try {
@@ -125,7 +126,7 @@ public class ListenerImplementationClass implements ITestListener {
 
 			/* Creates path to captured screenshot in current jenkins job's workspace */
 			String pathToScreenshotInJob = "/job/" + jenkinsJobName + "/ws/Screenshots/" + screenshotName + ".png";
-			System.out.println(pathToScreenshotInJob);
+			Reporter.log("Path to screenshot in jenkins job: "+pathToScreenshotInJob,true);
 
 			/*
 			 * Attaches screenshot captured from Jenkins job's workspace to the extent
