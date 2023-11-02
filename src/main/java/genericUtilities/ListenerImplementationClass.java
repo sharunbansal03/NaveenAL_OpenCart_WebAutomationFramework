@@ -35,7 +35,7 @@ public class ListenerImplementationClass implements ITestListener {
 		// log execution environment info
 		extentTestThreadSafe.get()
 				.info("Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
-						+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform")
+						+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platformName")
 						+ "; Driver: " + result.getAttribute("driver"));
 
 		extentTestThreadSafe.get().log(Status.INFO, "Test Execution Started: " + methodName);

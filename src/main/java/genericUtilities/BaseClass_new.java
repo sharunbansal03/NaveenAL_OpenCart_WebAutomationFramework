@@ -187,7 +187,6 @@ public class BaseClass_new {
 
 		argumentsObject.put("name", name);
 		executorObject.put("action", "setSessionName");
-
 		executorObject.put("arguments", argumentsObject);
 
 		jse.executeScript(String.format("browserstack_executor: %s", executorObject));
