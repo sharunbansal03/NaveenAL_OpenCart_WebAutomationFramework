@@ -1,5 +1,7 @@
 package genericUtilities;
 
+import java.io.IOException;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
@@ -10,6 +12,7 @@ public class ExtentManagerUtility {
 
 	public static void setUpExtentReport() {
 		JavaUtility jUtils = new JavaUtility();
+		PropertiesFileUtility pUtils = new PropertiesFileUtility();
 		String reportPath = IConstantsUtility.ExtentReportsFolderPath + "\\Report_" + jUtils.getSystemDataAndTimeInFormat()
 				+ ".html";
 		ExtentSparkReporter htmlReport = new ExtentSparkReporter(reportPath);
@@ -19,7 +22,12 @@ public class ExtentManagerUtility {
 
 		report = new ExtentReports();
 		report.attachReporter(htmlReport);
-		report.setSystemInfo("Base url", "https://www.amazon.in/");
+		try {
+			report.setSystemInfo("Base url", pUtils.readFromPropertiesFile("app_url"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		report.setSystemInfo("Reporter name", "sharun");
 	}
 

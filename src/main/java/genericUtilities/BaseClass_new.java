@@ -20,6 +20,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -70,7 +71,7 @@ public class BaseClass_new {
 	@Parameters({ "configFile", "environment" })
 	@BeforeMethod(alwaysRun = true)
 	public void setUpDriverAndLogin_bmConfig(@Optional String configFile, @Optional String environment, Method m,
-			ITestResult result) throws IOException {
+			ITestContext testInfo) throws IOException {
 		String ConfigurationFile = null;
 		String environmentInfo = null;
 
@@ -107,7 +108,7 @@ public class BaseClass_new {
 
 		// To attach info to test in extent report configuration in
 		// ListenerImplementationClass's onTestStart()
-		setITestResultAttributes(result, ConfigurationFile, environmentInfo);
+		setITestContextAttributes(testInfo, ConfigurationFile, environmentInfo);
 
 		/**
 		 * Launch app and login
@@ -236,8 +237,7 @@ public class BaseClass_new {
 		try {
 			driver = new RemoteWebDriver(new URL(hubUrl), cap);
 			sDriver = driver;
-			Reporter.log("******* Launched " + cap.getBrowserName() + " browser; Version: "
-					+ cap.getCapability("browserVersion") + " ***********", true);
+			Reporter.log("******* Launched " + cap.getBrowserName()+" ***********", true);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -323,30 +323,30 @@ public class BaseClass_new {
 		return driver;
 	}
 
-	private void setITestResultAttributes(ITestResult result, String configurationFile, String environmentInfo) {
+	private void setITestContextAttributes(ITestContext testInfo, String configurationFile, String environmentInfo) {
 		String configFilePath = IConstantsUtility.configFilePath + configurationFile;
 		JSONObject configuration = tUtils.getTestConfiguration(configFilePath);
 
 		String driver = tUtils.determineLocalOrRemoteDriver(configuration);
 
 		if (driver.equalsIgnoreCase("local")) {
-			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			result.setAttribute("platform", "Windows");
-			result.setAttribute("driver", "local");
+			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			testInfo.setAttribute("platform", "Windows");
+			testInfo.setAttribute("driver", "local");
 		} else if (driver.equalsIgnoreCase("remote")) {
-			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			result.setAttribute("platform", "Windows");
-			result.setAttribute("driver", "remote");
+			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			testInfo.setAttribute("platform", "Windows");
+			testInfo.setAttribute("driver", "remote");
 		} else if (driver.equalsIgnoreCase("saucelabs")) {
-			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
-			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
-			result.setAttribute("driver", "saucelabs");
+			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			testInfo.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
+			testInfo.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
+			testInfo.setAttribute("driver", "saucelabs");
 		} else if (driver.equalsIgnoreCase("browserstack")) {
-			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
-			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
-			result.setAttribute("driver", "browserstack");
+			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			testInfo.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
+			testInfo.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
+			testInfo.setAttribute("driver", "browserstack");
 		}
 	}
 
@@ -357,9 +357,8 @@ public class BaseClass_new {
 	 * @throws IOException
 	 * 
 	 */
-	@Parameters("configFile")
 	@AfterMethod(alwaysRun = true)
-	public void quitDriver_amConfig(@Optional String configFile, ITestResult result) throws IOException {
+	public void quitDriver_amConfig(ITestResult result) throws IOException {
 		// if execution on remote(browserstack cloud), mark test cases as pass/fail
 		if (result.getAttribute("driver").toString().equalsIgnoreCase("browserstack")) {
 			final JavascriptExecutor jse = (JavascriptExecutor) driver;
