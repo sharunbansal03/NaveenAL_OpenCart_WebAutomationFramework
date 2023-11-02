@@ -71,7 +71,7 @@ public class BaseClass_new {
 	@Parameters({ "configFile", "environment" })
 	@BeforeMethod(alwaysRun = true)
 	public void setUpDriverAndLogin_bmConfig(@Optional String configFile, @Optional String environment, Method m,
-			ITestContext testInfo) throws IOException {
+			ITestResult result) throws IOException {
 		String ConfigurationFile = null;
 		String environmentInfo = null;
 
@@ -108,7 +108,7 @@ public class BaseClass_new {
 
 		// To attach info to test in extent report configuration in
 		// ListenerImplementationClass's onTestStart()
-		setITestContextAttributes(testInfo, ConfigurationFile, environmentInfo);
+		setITestResultAttributes(result, ConfigurationFile, environmentInfo);
 
 		/**
 		 * Launch app and login
@@ -323,30 +323,30 @@ public class BaseClass_new {
 		return driver;
 	}
 
-	private void setITestContextAttributes(ITestContext testInfo, String configurationFile, String environmentInfo) {
+	private void setITestResultAttributes(ITestResult result, String configurationFile, String environmentInfo) {
 		String configFilePath = IConstantsUtility.configFilePath + configurationFile;
 		JSONObject configuration = tUtils.getTestConfiguration(configFilePath);
 
 		String driver = tUtils.determineLocalOrRemoteDriver(configuration);
 
 		if (driver.equalsIgnoreCase("local")) {
-			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			testInfo.setAttribute("platform", "Windows");
-			testInfo.setAttribute("driver", "local");
+			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			result.setAttribute("platform", "Windows");
+			result.setAttribute("driver", "local");
 		} else if (driver.equalsIgnoreCase("remote")) {
-			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			testInfo.setAttribute("platform", "Windows");
-			testInfo.setAttribute("driver", "remote");
+			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			result.setAttribute("platform", "Windows");
+			result.setAttribute("driver", "remote");
 		} else if (driver.equalsIgnoreCase("saucelabs")) {
-			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			testInfo.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
-			testInfo.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
-			testInfo.setAttribute("driver", "saucelabs");
+			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
+			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
+			result.setAttribute("driver", "saucelabs");
 		} else if (driver.equalsIgnoreCase("browserstack")) {
-			testInfo.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
-			testInfo.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
-			testInfo.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
-			testInfo.setAttribute("driver", "browserstack");
+			result.setAttribute("browserName", tUtils.getBrowser(configuration, environmentInfo));
+			result.setAttribute("browserVersion", tUtils.getBrowserVersion(configuration, environmentInfo));
+			result.setAttribute("platformName", tUtils.getPlatform(configuration, environmentInfo));
+			result.setAttribute("driver", "browserstack");
 		}
 	}
 

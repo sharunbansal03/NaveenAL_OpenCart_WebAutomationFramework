@@ -25,7 +25,7 @@ public class ListenerImplementationClass implements ITestListener {
 	 */
 	ThreadLocal<ExtentTest> extentTestThreadSafe = new ThreadLocal<ExtentTest>();
 
-	public void onTestStart(ITestResult result,ITestContext testInfo) {
+	public void onTestStart(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
 		ExtentTest test = ExtentManagerUtility.report.createTest(methodName);
 
@@ -34,9 +34,9 @@ public class ListenerImplementationClass implements ITestListener {
 
 		// log execution environment info
 		extentTestThreadSafe.get()
-				.info("Browser: " + testInfo.getAttribute("browserName") + "; BrowserVersion: "
-						+ testInfo.getAttribute("browserVersion") + "; OS/Platform: " + testInfo.getAttribute("platform")
-						+ "; Driver: " + testInfo.getAttribute("driver"));
+				.info("Browser: " + result.getAttribute("browserName") + "; BrowserVersion: "
+						+ result.getAttribute("browserVersion") + "; OS/Platform: " + result.getAttribute("platform")
+						+ "; Driver: " + result.getAttribute("driver"));
 
 		extentTestThreadSafe.get().log(Status.INFO, "Test Execution Started: " + methodName);
 	}
