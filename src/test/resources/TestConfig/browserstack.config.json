@@ -8,7 +8,8 @@
 		"debug": true,
 		"local": false,
 		"networkLogs": true,
-		"projectName": "NaveenAL_OpenCart"
+		"projectName": "NaveenAL_OpenCart",
+		"buildName": "opencart_"
 	},
    "environments":{
       "chrome":{

@@ -44,6 +44,7 @@ public class BaseClass_new {
 
 	public PropertiesFileUtility pUtils = new PropertiesFileUtility();
 	public WebDriverUtility wUtils = new WebDriverUtility();
+	public JavaUtility jUtils = new JavaUtility();
 	TestConfigUtility tUtils = new TestConfigUtility();
 	public WebDriver driver = null;
 	public static WebDriver sDriver = null; // sDriver used for taking screenshots
@@ -149,6 +150,7 @@ public class BaseClass_new {
 		String server = tUtils.getBrowserStackServer(configuration);
 		String username = tUtils.getBrowserStackUserName(configuration);
 		String accessKey = tUtils.getBrowserStackKey(configuration);
+	
 
 		String url = "https://" + username + ":" + accessKey + "@" + server + "/wd/hub";
 
@@ -165,6 +167,10 @@ public class BaseClass_new {
 
 		// attach browser stack custom capabilities
 		HashMap<String, Object> browserstackOptions = setBrowserStackGenericCapabilities(configuration);
+		
+		if(System.getenv("BROWSERSTACK_BUILD_NAME")!=null)
+		browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME"));
+		
 		capabilities.setCapability("bstack:options", browserstackOptions);
 
 		try {
@@ -225,6 +231,9 @@ public class BaseClass_new {
 	private HashMap<String, Object> setBrowserStackGenericCapabilities(JSONObject configuration) {
 		HashMap<String, Object> bsCap = (HashMap<String, Object>) tUtils
 				.getBrowserStackGeneralCapabilities(configuration);
+		String buildName = bsCap.get("buildName").toString() + jUtils.getSystemDataAndTimeInFormat();
+		bsCap.put("buildName", buildName);
+		
 		return bsCap;
 	}
 
