@@ -20,7 +20,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -64,33 +63,15 @@ public class BaseClass_new {
 	public void bsCap_extentReport_bsConfig(@Optional String configFile) {
 		System.out.println("======= Suite execution started=============");
 
-		// if "config-file" information is not passed from "suite.xml" file or from
-		// command line{mvn comd},
-		// pick config file from "commonData.properties" file
-		// Priority: 1. mvn property 2. testng suite paramater 3. commonData
-
-		if (System.getProperty("configFile") != null) {
-			configurationFileName = System.getProperty("configFile");
-		} else if (configFile != null) {
-			configurationFileName = configFile;
-		} else {
-			try {
-				configurationFileName = pUtils.readFromPropertiesFile("configFile");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		System.out.println("configuration file name : " + configurationFileName);
-
-		String configFilePath = IConstantsUtility.configFilePath + configurationFileName;
-
-		String driver = tUtils.determineLocalOrRemoteDriver(tUtils.getTestConfiguration(configFilePath));
+		configurationFileName = determineConfigurationFileName(configFile);
+		Reporter.log("configuration file name : " + configurationFileName, true);
 
 		/**
-		 * If driver=browserstack, set browser stack capabilities and attach a
-		 * "buildName" for current suite execution in browserstack
+		 * If driver=browserstack in the configuration file, set browser stack capabilities and attach a
+		 * "buildName" for current suite execution to the BrowserStack dashboard 
 		 */
+		String configFilePath = IConstantsUtility.configFilePath + configurationFileName;
+		String driver = tUtils.determineLocalOrRemoteDriver(tUtils.getTestConfiguration(configFilePath));
 		if (driver.equalsIgnoreCase("browserstack")) {
 			setBuildNameAndOtherBrowserStackCap();
 		}
@@ -105,14 +86,16 @@ public class BaseClass_new {
 	private void setBuildNameAndOtherBrowserStackCap() {
 		String configFilePath = IConstantsUtility.configFilePath + configurationFileName;
 
-
 		// get browser stack custom capabilities
 		browserstackOptions = setBrowserStackGenericCapabilities(tUtils.getTestConfiguration(configFilePath));
 
-		Reporter.log("build name from jenkins: " + System.getenv("BROWSERSTACK_BUILD_NAME"),true);
-
+		/**
+		 * When execution is from jenkins, update to integrate BuildName from Jenkins
+		 */
 		if (System.getenv("BROWSERSTACK_BUILD_NAME") != null) {
-			System.out.println("changing build name to jenkins" + System.getenv("BROWSERSTACK_BUILD_NAME"));
+			Reporter.log(
+					"updating build name to jenkins environment variable: " + System.getenv("BROWSERSTACK_BUILD_NAME"),
+					true);
 			browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME"));
 		}
 	}
@@ -122,6 +105,8 @@ public class BaseClass_new {
 	 * 
 	 * Config File Name can be provided using "mvn property" or "testng parameter"
 	 * or from "commonData.properties" file
+	 * 
+	 * Priority: 1. mvn parameter 2. testng suite paramater 3. commonData
 	 * 
 	 * @param configFile
 	 * @return
@@ -203,7 +188,8 @@ public class BaseClass_new {
 	}
 
 	/**
-	 * This method will launch WebDriver instance based on the driver and environment information in configuration file for the suite
+	 * This method will launch WebDriver instance based on the driver and
+	 * environment information in configuration file for the suite
 	 * 
 	 * @param environmentInfo
 	 * @param m

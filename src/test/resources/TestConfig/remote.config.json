@@ -23,7 +23,7 @@
         "platformName": "Windows 10"
       }
     },
-    "MicrosoftEdge": {
+    "edge": {
       "capabilities": {
         "browserName": "MicrosoftEdge",
         "platformName": "Windows 10"

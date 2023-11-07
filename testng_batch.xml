@@ -9,6 +9,7 @@
   <test thread-count="5" name="Test_Batch">
     <classes>
       <class name="MyAccount.Tests.LoginTest"/>
+      <class name="MyAccount.Tests.LogOutTest"/>
     </classes>
   </test> <!-- Test -->
  
