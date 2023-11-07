@@ -6,10 +6,11 @@
 		<listener
 			class-name="genericUtilities.ListenerImplementationClass"></listener>
 	</listeners>
+	
+	<parameter name="configFile"
+			value="browserstack.config.json"></parameter>
 
 	<test thread-count="5" name="Test_ChromeLatest_Win10">
-		<parameter name="configFile"
-			value="browserstack.config.json"></parameter>
 		<parameter name="environment" value="chrome"></parameter>
 
 		<classes>
@@ -19,24 +20,10 @@
 	</test> <!-- Test -->
 
 	<test thread-count="5" name="Test_Firefox118_Win11">
-		<parameter name="configFile"
-			value="browserstack.config.json"></parameter>
 		<parameter name="environment" value="firefox"></parameter>
 
 		<classes>
 			<class name="MyAccount.Tests.LoginTest" />
-			<class name="MyAccount.Tests.LogOutTest" />
-		</classes>
-	</test> <!-- Test -->
-
-	<test thread-count="5" name="Test_Edge117_Win10">
-		<parameter name="configFile"
-			value="browserstack.config.json"></parameter>
-		<parameter name="environment" value="edge"></parameter>
-
-		<classes>
-			<class name="MyAccount.Tests.LoginTest" />
-			<class name="MyAccount.Tests.LogOutTest" />
 		</classes>
 	</test> <!-- Test -->
 

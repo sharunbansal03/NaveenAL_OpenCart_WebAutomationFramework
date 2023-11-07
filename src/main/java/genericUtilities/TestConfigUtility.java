@@ -21,7 +21,7 @@ public class TestConfigUtility {
 	}
 	
 	/**
-	 * This method will return complete Test Configuration
+	 * This method will return complete Test Configuration json object
 	 * 
 	 * @param jsonFilePath
 	 * @param objectKey

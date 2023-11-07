@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite" thread-count="5">
+
 <listeners>
 <listener class-name="genericUtilities.ListenerImplementationClass"></listener>
 </listeners>
 
-  <test thread-count="5" name="Test_Login">
+  <test thread-count="5" name="Test_Batch">
     <classes>
       <class name="MyAccount.Tests.LoginTest"/>
       <class name="MyAccount.Tests.LogOutTest"/>

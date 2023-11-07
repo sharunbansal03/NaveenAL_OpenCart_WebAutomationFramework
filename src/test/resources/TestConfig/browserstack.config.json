@@ -1,5 +1,4 @@
 {
-   
 	"driver": "browserstack",
 	"server": "hub-cloud.browserstack.com",
 	"userName": "sharunbansal_ftsMTw",

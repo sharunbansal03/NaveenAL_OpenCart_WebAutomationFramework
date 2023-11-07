@@ -48,15 +48,103 @@ public class BaseClass_new {
 	TestConfigUtility tUtils = new TestConfigUtility();
 	public WebDriver driver = null;
 	public static WebDriver sDriver = null; // sDriver used for taking screenshots
+	public static String configurationFileName = null;
+	public static HashMap<String, Object> browserstackOptions = null;
 
 	/**
-	 * This method will execute before Suite and creates an new Extent Report for
-	 * the suite
+	 * This method will execute before Suite and ,
+	 * 
+	 * 1. Determine ConfigurationFileName to pick all environment configurations; 2.
+	 * If ConfigurationFile and Driver = BrowserStack, it sets up generic
+	 * BrowserStack Capabilities alongwith "BuildName" for current execution; 3.
+	 * Creates an new Extent Report for the suite
 	 */
+	@Parameters("configFile")
 	@BeforeSuite
-	public void createExtentReport_bsConfig() {
+	public void bsCap_extentReport_bsConfig(@Optional String configFile) {
 		System.out.println("======= Suite execution started=============");
+
+		// if "config-file" information is not passed from "suite.xml" file or from
+		// command line{mvn comd},
+		// pick config file from "commonData.properties" file
+		// Priority: 1. mvn property 2. testng suite paramater 3. commonData
+
+		if (System.getProperty("configFile") != null) {
+			configurationFileName = System.getProperty("configFile");
+		} else if (configFile != null) {
+			configurationFileName = configFile;
+		} else {
+			try {
+				configurationFileName = pUtils.readFromPropertiesFile("configFile");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("configuration file name : " + configurationFileName);
+
+		String configFilePath = IConstantsUtility.configFilePath + configurationFileName;
+
+		String driver = tUtils.determineLocalOrRemoteDriver(tUtils.getTestConfiguration(configFilePath));
+
+		/**
+		 * If driver=browserstack, set browser stack capabilities and attach a
+		 * "buildName" for current suite execution in browserstack
+		 */
+		if (driver.equalsIgnoreCase("browserstack")) {
+			setBuildNameAndOtherBrowserStackCap();
+		}
+
 		ExtentManagerUtility.setUpExtentReport();
+	}
+
+	/**
+	 * This method will set up BrowserStack Capabilities Options alongwith
+	 * "BuildName" for current execution
+	 */
+	private void setBuildNameAndOtherBrowserStackCap() {
+		String configFilePath = IConstantsUtility.configFilePath + configurationFileName;
+
+
+		// get browser stack custom capabilities
+		browserstackOptions = setBrowserStackGenericCapabilities(tUtils.getTestConfiguration(configFilePath));
+
+		System.out.println("build name from jenkins: " + System.getenv("BROWSERSTACK_BUILD_NAME"));
+
+		if (System.getenv("BROWSERSTACK_BUILD_NAME") != null) {
+			System.out.println("changing build name to jenkins" + System.getenv("BROWSERSTACK_BUILD_NAME"));
+			browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME"));
+		}
+	}
+
+	/**
+	 * This method will determine Configuration File Name
+	 * 
+	 * Config File Name can be provided using "mvn property" or "testng parameter"
+	 * or from "commonData.properties" file
+	 * 
+	 * @param configFile
+	 * @return
+	 */
+	private String determineConfigurationFileName(@Optional String configFile) {
+		String configFileName = null;
+		// if "config-file" information is not passed from "suite.xml" file or from
+		// command line{mvn comd},
+		// pick config file from "commonData.properties" file
+		if (System.getProperty("configFile") != null) {
+			configFileName = System.getProperty("configFile");
+		} else if (configFile != null) {
+			configFileName = configFile;
+		} else {
+			try {
+				configFileName = pUtils.readFromPropertiesFile("configFile");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("configuration file name : " + configFileName);
+		return configFileName;
 	}
 
 	/**
@@ -69,24 +157,11 @@ public class BaseClass_new {
 		ExtentManagerUtility.flushReport();
 	}
 
-	@Parameters({ "configFile", "environment" })
+	@Parameters("environment")
 	@BeforeMethod(alwaysRun = true)
-	public void setUpDriverAndLogin_bmConfig(@Optional String configFile, @Optional String environment, Method m,
-			ITestResult result) throws IOException {
-		String ConfigurationFile = null;
+	public void setUpDriverAndLogin_bmConfig(@Optional String environment, Method m, ITestResult result)
+			throws IOException {
 		String environmentInfo = null;
-
-		// if "config-file" information is not passed from "suite.xml" file or from
-		// command line{mvn comd},
-		// pick config file from "commonData.properties" file
-
-		if (System.getProperty("configFile") != null) {
-			ConfigurationFile = System.getProperty("configFile");
-			System.out.println(System.getProperty("configFile"));
-		} else if (configFile != null) {
-			ConfigurationFile = configFile;
-		} else
-			ConfigurationFile = pUtils.readFromPropertiesFile("configFile");
 
 		// if environment is not provided from "suite.xml" file or mvn command, pick
 		// environment from "commonData.properties"
@@ -95,21 +170,20 @@ public class BaseClass_new {
 		// pick environment information from "commonData.properties" file
 		if (System.getProperty("environment") != null) {
 			environmentInfo = System.getProperty("environment");
-			System.out.println(System.getProperty("environment"));
 		} else if (environment != null) {
 			environmentInfo = environment;
 		} else
 			environmentInfo = pUtils.readFromPropertiesFile("environment");
 
 		// Set up driver - local or remote based on info in config file
-		_setUpDriver(ConfigurationFile, environmentInfo, m);
+		_setUpDriver(environmentInfo, m);
 
 		wUtils.maximizeWindow(driver);
 		wUtils.waitForPageToLoad(driver);
 
 		// To attach info to test in extent report configuration in
 		// ListenerImplementationClass's onTestStart()
-		setITestResultAttributes(result, ConfigurationFile, environmentInfo);
+		setITestResultAttributes(result, configurationFileName, environmentInfo);
 
 		/**
 		 * Launch app and login
@@ -128,10 +202,16 @@ public class BaseClass_new {
 		loginPage.loginToApp(emailAddress, password);
 	}
 
-	private void _setUpDriver(String configurationFile, String environmentInfo, Method m) {
-		String configFilePath = IConstantsUtility.configFilePath + configurationFile;
-
+	/**
+	 * This method will launch WebDriver instance based on the driver and environment information in configuration file for the suite
+	 * 
+	 * @param environmentInfo
+	 * @param m
+	 */
+	private void _setUpDriver(String environmentInfo, Method m) {
 		// get "driver" key value - local or remote from given config file
+		String configFilePath = IConstantsUtility.configFilePath + configurationFileName;
+		System.out.println("config file path: " + configFilePath);
 		JSONObject configuration = tUtils.getTestConfiguration(configFilePath);
 		String driverInJsonFile = tUtils.determineLocalOrRemoteDriver(configuration);
 
@@ -150,7 +230,6 @@ public class BaseClass_new {
 		String server = tUtils.getBrowserStackServer(configuration);
 		String username = tUtils.getBrowserStackUserName(configuration);
 		String accessKey = tUtils.getBrowserStackKey(configuration);
-	
 
 		String url = "https://" + username + ":" + accessKey + "@" + server + "/wd/hub";
 
@@ -165,12 +244,6 @@ public class BaseClass_new {
 		capabilities.setCapability("platformName", platformName);
 		capabilities.setCapability("acceptInsecureCerts", true);
 
-		// attach browser stack custom capabilities
-		HashMap<String, Object> browserstackOptions = setBrowserStackGenericCapabilities(configuration);
-		
-		if(System.getenv("BROWSERSTACK_BUILD_NAME")!=null)
-		browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME"));
-		
 		capabilities.setCapability("bstack:options", browserstackOptions);
 
 		try {
@@ -231,9 +304,11 @@ public class BaseClass_new {
 	private HashMap<String, Object> setBrowserStackGenericCapabilities(JSONObject configuration) {
 		HashMap<String, Object> bsCap = (HashMap<String, Object>) tUtils
 				.getBrowserStackGeneralCapabilities(configuration);
+
+		System.out.println("setting build name");
 		String buildName = bsCap.get("buildName").toString() + jUtils.getSystemDataAndTimeInFormat();
 		bsCap.put("buildName", buildName);
-		
+
 		return bsCap;
 	}
 
@@ -245,7 +320,7 @@ public class BaseClass_new {
 		try {
 			driver = new RemoteWebDriver(new URL(hubUrl), cap);
 			sDriver = driver;
-			Reporter.log("******* Launched " + cap.getBrowserName()+" ***********", true);
+			Reporter.log("******* Launched " + cap.getBrowserName() + " ***********", true);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
