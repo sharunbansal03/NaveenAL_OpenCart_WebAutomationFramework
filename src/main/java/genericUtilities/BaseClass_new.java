@@ -109,7 +109,7 @@ public class BaseClass_new {
 		// get browser stack custom capabilities
 		browserstackOptions = setBrowserStackGenericCapabilities(tUtils.getTestConfiguration(configFilePath));
 
-		System.out.println("build name from jenkins: " + System.getenv("BROWSERSTACK_BUILD_NAME"));
+		Reporter.log("build name from jenkins: " + System.getenv("BROWSERSTACK_BUILD_NAME"),true);
 
 		if (System.getenv("BROWSERSTACK_BUILD_NAME") != null) {
 			System.out.println("changing build name to jenkins" + System.getenv("BROWSERSTACK_BUILD_NAME"));
